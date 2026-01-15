@@ -25,17 +25,13 @@ const Folder: React.FC<FolderProps> = ({ project, isActive, index, total, onClic
   const borderColor = isDark ? 'border-white/20' : 'border-paper-900/20';
   const mutedTextColor = isDark ? 'text-white/40' : 'text-paper-900/40';
 
-  // Calculate dynamic dimensions for resting state based on aspect ratio
-  // This makes the folders "responsive" to the content inside as requested.
   const restingDimensions = useMemo(() => {
     const baseHeight = 580;
-    const minWidth = 480; // Ensuring it's never too "skinny"
+    const minWidth = 480;
     const maxWidth = 800;
     
     let width = baseHeight * project.aspectRatio;
     
-    // For the specific portrait orientation common in posters (like 0.7 ratio), 
-    // we lean towards a wider profile to maintain the "archival folder" feel.
     if (project.aspectRatio < 1) {
       width = Math.max(minWidth, width * 1.2); 
     }
@@ -64,7 +60,6 @@ const Folder: React.FC<FolderProps> = ({ project, isActive, index, total, onClic
         zIndex: isActive ? 50 : index + 1, 
         opacity: isActive ? 1 : (index < 6 ? 1 : 0.2),
       }}
-      // Fixed: Changed invalid property 'baseHeight' to 'ease' in transition config
       whileHover={!isActive ? { 
         scale: 0.63,
         transition: { duration: 0.3, ease: "easeOut" }
@@ -98,7 +93,6 @@ const Folder: React.FC<FolderProps> = ({ project, isActive, index, total, onClic
          </div>
       </div>
 
-      {/* Main Folder Body */}
       <div 
         className={`relative w-full h-full rounded-sm overflow-hidden flex flex-col border border-opacity-30 ${isDark ? 'border-white' : 'border-black'} transition-all duration-700 paper-texture ${isActive ? 'shadow-[0_60px_100px_-20px_rgba(0,0,0,0.3)]' : 'shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)]'}`}
         style={{ backgroundColor: project.color }}
@@ -129,7 +123,6 @@ const Folder: React.FC<FolderProps> = ({ project, isActive, index, total, onClic
 
         {/* Content Area */}
         <div className={`flex-1 p-10 flex gap-10 relative z-10 overflow-hidden`}>
-            
             {/* Left Metadata Column */}
             <div className={`w-1/3 flex flex-col gap-6 font-mono text-sm ${textColor} border-r ${borderColor} pr-10 overflow-y-auto custom-scrollbar`}>
                 <div className="space-y-3 shrink-0">
@@ -200,7 +193,6 @@ const Folder: React.FC<FolderProps> = ({ project, isActive, index, total, onClic
             </div>
         </div>
 
-        {/* Industrial Footer */}
         <div className={`h-12 border-t ${borderColor} bg-black/10 flex items-center justify-between px-10 z-10 shrink-0`}>
              <p className={`text-[10px] font-mono font-black tracking-[0.5em] uppercase ${mutedTextColor}`}>RESTRICTED_ACCESS_SECURE_NODE_1A</p>
              <Grip size={16} className={mutedTextColor} />
